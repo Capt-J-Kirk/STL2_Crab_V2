@@ -59,10 +59,10 @@ public class RadialMenuEntry : MonoBehaviour, IPointerClickHandler, IPointerEnte
     
     public void PlayAudioClip()
     {
-        Debug.Log("Plays Audio");
         AudioSource audio = GetComponent<AudioSource>();
         audio.clip = GetAudio();
         audio.Play();
+        Debug.Log("Plays Audio  Radial Menu Entry");
     }
 
     public void OnPointerClick(PointerEventData eventData)
