@@ -24,11 +24,27 @@ public class GameData : MonoBehaviour
     public int playersReady = 0;
     public bool saveFile;
 
+    // Finish Level
+    string message_LevelComplete = "You finished the level, congrats!";
+    string message_LevelAndGameComplete = "You finished Level and Game. Congrats;";
+    string message_Died = "The Crab died.";
+    float showMessageTime = 1.5f;
+    float showMessageTimer = 0;
+    string message = "";
+    bool showMessage = false;
+
+    // Finish game
+    int totalLevels = 1;
+    int currentLevel;
+
+
 
     private void Awake()
     {
         tethers = new(FindObjectsByType<TetherBreak_V2>(FindObjectsSortMode.None));
         saveFile = true;
+        playersReady = 0;
+        currentLevel = 1;
     }
 
     // Post processing
@@ -38,22 +54,40 @@ public class GameData : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Count unbroken tethers, and end game if there is none.
         int tethersLeft = 0;
         foreach (TetherBreak_V2 itr in tethers)
         {
             if (itr.ropeBroken == false) tethersLeft++;
         }
+        if (tethersLeft == 0 && saveFile) FinishLevel(false);
 
-        if (tethersLeft <= 0 && saveFile) EndGame();
-
+        // Always increment game timer, if 2 players are ready.
         if (playersReady == 2)
         {
             gameTimer += Time.deltaTime;
         }
+
+        // Increment levelTimer if level started.
         if (levelStarted)
         {
             levelTimer += Time.deltaTime;
-            levelTimeText.text = "Timer: " + levelTimer.ToString("F1");
+        }
+
+        // Show timer or message.
+        if (!showMessage)
+        {
+            if (levelStarted) levelTimeText.text = "Timer: " + levelTimer.ToString("F1");
+        }
+        else
+        {
+            showMessageTimer += Time.deltaTime;
+            levelTimeText.text = message;
+            if (showMessageTimer > showMessageTime)
+            {
+                showMessage = false;
+                showMessageTimer = 0;
+            }
         }
     }
 
@@ -83,33 +117,64 @@ public class GameData : MonoBehaviour
         levelDurations.Add(0f);
     }
 
-    public void FinishLevel()
+
+    public void FinishLevel(bool isAlive)
     {
-        levelStarted = false;
-        levelDurations[levelDurations.Count - 1] = levelTimer;
-        levelTimer = 0f;
+        // Show message.
+        showMessage = true;
+
+        // End game, in one way or another.
+        if (currentLevel == totalLevels || !isAlive)
+        {
+            levelStarted = false;
+            levelDurations[levelDurations.Count - 1] = levelTimer;
+            levelTimer = 0f;
+            if (!isAlive)
+            {
+                message = message_Died;
+                EndGame("False");
+            }
+            else
+            {
+                message = message_LevelAndGameComplete;
+                EndGame("True");
+            }
+
+        }
+        // Continue with next level.
+        else
+        {
+            levelStarted = true;
+            message = message_LevelComplete;
+            levelDurations[levelDurations.Count - 1] = levelTimer;
+            levelTimer = 0f;
+            currentLevel++;
+        }
     }
 
-    void EndGame()
+
+    void EndGame(string gameComplete)
     {
         playersReady = 0;
-        FinishLevel();
+        levelStarted = false;
 
-        SaveGameData();
+        SaveGameData(gameComplete);
         // In case we want to quit the game.
         //Application.Quit();
     }
 
-    void SaveGameData()
+
+    void SaveGameData(string gameComplete)
     {
         saveFile = false;
         string playerData = "";
         int i = 1;
         foreach (float itr in levelDurations)
         {
-            playerData += "Level " + i.ToString() + ", " + itr;
+            playerData += "Level " + i.ToString() + ", " + itr + ", ";
             i++;
         }
+        playerData += "GameComplete: " + gameComplete;
 
         string dataFolderPath = Application.dataPath + "/Data";
         if (!Directory.Exists(dataFolderPath)) Directory.CreateDirectory(dataFolderPath);
