@@ -9,6 +9,8 @@ public class PlayerInputHandler : MonoBehaviour
 {
     private PlayerInput playerInput;
     private CrabControl crabControl;
+    private GamepadCursor gamepadCursor;
+    public int index;
 
     // private Crab_Input inputDPad = null;
 
@@ -16,11 +18,13 @@ public class PlayerInputHandler : MonoBehaviour
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+        gamepadCursor = GetComponent<GamepadCursor>();
         var controllers = FindObjectsOfType<CrabControl>();
         foreach (CrabControl itr in controllers) Debug.Log("crab controllers: " + itr.name);
-        var index = playerInput.playerIndex;
+        index = playerInput.playerIndex;
         crabControl = controllers.FirstOrDefault(m => m.GetPlayerIndex() == index);
 
+        Debug.Log(index);
         // inputDPad = new Crab_Input();
     }
 
@@ -93,6 +97,7 @@ public class PlayerInputHandler : MonoBehaviour
         if (crabControl == null) return;
 
         crabControl.rightVector = value.ReadValue<Vector2>();
+        gamepadCursor.rightStickValue = value.ReadValue<Vector2>();
     }
 
     public void OnRightStickCancelled(InputAction.CallbackContext value)
@@ -149,6 +154,27 @@ public class PlayerInputHandler : MonoBehaviour
     {
 
 
+    }
+    
+    public void OnLeftShoulderPerformed(InputAction.CallbackContext context)
+    {
+        if (crabControl == null) return;
+    
+        if (context.performed)
+        {
+            Debug.Log("Performed Left Bumper");
+            crabControl.radialMenu.GetComponent<RadialMenu>().Open();
+            crabControl.rightStickRotateCamera = false;
+            crabControl.cursor.SetActive(true);
+        }
+    
+        if (context.canceled) 
+        {
+            Debug.Log("Cancelled Left Bumper");
+            crabControl.radialMenu.GetComponent<RadialMenu>().Close();
+            crabControl.rightStickRotateCamera = true;
+            crabControl.cursor.SetActive(false);
+        }
     }
 
 

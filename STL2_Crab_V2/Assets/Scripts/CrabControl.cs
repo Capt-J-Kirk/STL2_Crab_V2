@@ -15,6 +15,7 @@ public class CrabControl : MonoBehaviour
     public Vector2 leftVector = Vector2.zero;
     public Vector2 leftVector_prev = Vector2.zero;
     public Vector2 rightVector = Vector2.zero;
+    public bool rightStickRotateCamera = true;
 
     // Camera
     public Camera camera;
@@ -47,6 +48,9 @@ public class CrabControl : MonoBehaviour
     [HideInInspector] public bool isSpraying = false;
 
     public GameData gameData;
+    
+    public GameObject radialMenu; // RadialMenu
+    public GameObject cursor; // Cursor
 
 
     private void Awake()
@@ -70,7 +74,10 @@ public class CrabControl : MonoBehaviour
         if (gameData.playersReady >= 2)
         {
             Move();
-            RotateCamera();
+            if (rightStickRotateCamera)
+            {
+                RotateCamera();
+            }
         }
     }
 

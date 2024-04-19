@@ -37,6 +37,24 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Point"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""af89cb2b-a3e5-4754-8b6c-4baa0138e7b4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""f2ca0081-de95-4c0a-bdf6-ac48f5b571b7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""RightStick"",
                     ""type"": ""Value"",
                     ""id"": ""845c6f04-2883-4e4f-b002-47dc0febe6dc"",
@@ -76,6 +94,15 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
                     ""name"": ""X_Button"",
                     ""type"": ""Button"",
                     ""id"": ""a671ce15-d5ff-4747-89a4-559d28776620"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftBumper"",
+                    ""type"": ""Button"",
+                    ""id"": ""1fc06ebd-2694-4f7d-bfe5-dde8d344ca71"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -401,6 +428,50 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
                     ""action"": ""X_Button"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a17b601e-8f9d-478c-a688-f961d1a85583"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftBumper"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9a88fdf-b83a-4469-9060-9d522dbeb280"",
+                    ""path"": ""<VirtualMouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60456a32-925b-4774-9160-b4491228c7ad"",
+                    ""path"": ""<VirtualMouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18798bc8-797d-412e-bab2-cc426146f690"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -410,11 +481,14 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
         // PlayerContol
         m_PlayerContol = asset.FindActionMap("PlayerContol", throwIfNotFound: true);
         m_PlayerContol_LeftStick = m_PlayerContol.FindAction("LeftStick", throwIfNotFound: true);
+        m_PlayerContol_Point = m_PlayerContol.FindAction("Point", throwIfNotFound: true);
+        m_PlayerContol_Click = m_PlayerContol.FindAction("Click", throwIfNotFound: true);
         m_PlayerContol_RightStick = m_PlayerContol.FindAction("RightStick", throwIfNotFound: true);
         m_PlayerContol_Arrows = m_PlayerContol.FindAction("Arrows", throwIfNotFound: true);
         m_PlayerContol_Jump = m_PlayerContol.FindAction("Jump", throwIfNotFound: true);
         m_PlayerContol_Particle = m_PlayerContol.FindAction("Particle", throwIfNotFound: true);
         m_PlayerContol_X_Button = m_PlayerContol.FindAction("X_Button", throwIfNotFound: true);
+        m_PlayerContol_LeftBumper = m_PlayerContol.FindAction("LeftBumper", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -477,21 +551,27 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerContol;
     private List<IPlayerContolActions> m_PlayerContolActionsCallbackInterfaces = new List<IPlayerContolActions>();
     private readonly InputAction m_PlayerContol_LeftStick;
+    private readonly InputAction m_PlayerContol_Point;
+    private readonly InputAction m_PlayerContol_Click;
     private readonly InputAction m_PlayerContol_RightStick;
     private readonly InputAction m_PlayerContol_Arrows;
     private readonly InputAction m_PlayerContol_Jump;
     private readonly InputAction m_PlayerContol_Particle;
     private readonly InputAction m_PlayerContol_X_Button;
+    private readonly InputAction m_PlayerContol_LeftBumper;
     public struct PlayerContolActions
     {
         private @Crab_Input m_Wrapper;
         public PlayerContolActions(@Crab_Input wrapper) { m_Wrapper = wrapper; }
         public InputAction @LeftStick => m_Wrapper.m_PlayerContol_LeftStick;
+        public InputAction @Point => m_Wrapper.m_PlayerContol_Point;
+        public InputAction @Click => m_Wrapper.m_PlayerContol_Click;
         public InputAction @RightStick => m_Wrapper.m_PlayerContol_RightStick;
         public InputAction @Arrows => m_Wrapper.m_PlayerContol_Arrows;
         public InputAction @Jump => m_Wrapper.m_PlayerContol_Jump;
         public InputAction @Particle => m_Wrapper.m_PlayerContol_Particle;
         public InputAction @X_Button => m_Wrapper.m_PlayerContol_X_Button;
+        public InputAction @LeftBumper => m_Wrapper.m_PlayerContol_LeftBumper;
         public InputActionMap Get() { return m_Wrapper.m_PlayerContol; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -504,6 +584,12 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
             @LeftStick.started += instance.OnLeftStick;
             @LeftStick.performed += instance.OnLeftStick;
             @LeftStick.canceled += instance.OnLeftStick;
+            @Point.started += instance.OnPoint;
+            @Point.performed += instance.OnPoint;
+            @Point.canceled += instance.OnPoint;
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
             @RightStick.started += instance.OnRightStick;
             @RightStick.performed += instance.OnRightStick;
             @RightStick.canceled += instance.OnRightStick;
@@ -519,6 +605,9 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
             @X_Button.started += instance.OnX_Button;
             @X_Button.performed += instance.OnX_Button;
             @X_Button.canceled += instance.OnX_Button;
+            @LeftBumper.started += instance.OnLeftBumper;
+            @LeftBumper.performed += instance.OnLeftBumper;
+            @LeftBumper.canceled += instance.OnLeftBumper;
         }
 
         private void UnregisterCallbacks(IPlayerContolActions instance)
@@ -526,6 +615,12 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
             @LeftStick.started -= instance.OnLeftStick;
             @LeftStick.performed -= instance.OnLeftStick;
             @LeftStick.canceled -= instance.OnLeftStick;
+            @Point.started -= instance.OnPoint;
+            @Point.performed -= instance.OnPoint;
+            @Point.canceled -= instance.OnPoint;
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
             @RightStick.started -= instance.OnRightStick;
             @RightStick.performed -= instance.OnRightStick;
             @RightStick.canceled -= instance.OnRightStick;
@@ -541,6 +636,9 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
             @X_Button.started -= instance.OnX_Button;
             @X_Button.performed -= instance.OnX_Button;
             @X_Button.canceled -= instance.OnX_Button;
+            @LeftBumper.started -= instance.OnLeftBumper;
+            @LeftBumper.performed -= instance.OnLeftBumper;
+            @LeftBumper.canceled -= instance.OnLeftBumper;
         }
 
         public void RemoveCallbacks(IPlayerContolActions instance)
@@ -561,10 +659,13 @@ public partial class @Crab_Input: IInputActionCollection2, IDisposable
     public interface IPlayerContolActions
     {
         void OnLeftStick(InputAction.CallbackContext context);
+        void OnPoint(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
         void OnRightStick(InputAction.CallbackContext context);
         void OnArrows(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnParticle(InputAction.CallbackContext context);
         void OnX_Button(InputAction.CallbackContext context);
+        void OnLeftBumper(InputAction.CallbackContext context);
     }
 }
