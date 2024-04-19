@@ -48,7 +48,8 @@ public class CrabControl : MonoBehaviour
     [HideInInspector] public bool isSpraying = false;
 
     public GameData gameData;
-    
+    private bool allowMovementOnDeath = false;   // For testing.
+
     public GameObject radialMenu; // RadialMenu
     public GameObject cursor; // Cursor
 
@@ -71,7 +72,7 @@ public class CrabControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (gameData.playersReady >= 2)
+        if (gameData.playersReady >= 2 || allowMovementOnDeath)
         {
             Move();
             if (rightStickRotateCamera)
