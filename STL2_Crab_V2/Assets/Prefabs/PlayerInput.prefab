@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2072716791200118339}
   - component: {fileID: 4652891296975040586}
   - component: {fileID: 311452237232616591}
+  - component: {fileID: 3243796796905125104}
   m_Layer: 0
   m_Name: PlayerInput
   m_TagString: Untagged
@@ -106,6 +107,30 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: a671ce15-d5ff-4747-89a4-559d28776620
     m_ActionName: DPadContol/X_Button[/DualShock4GamepadHID/buttonWest]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 311452237232616591}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnLeftShoulderPerformed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1fc06ebd-2694-4f7d-bfe5-dde8d344ca71
+    m_ActionName: PlayerContol/LeftBumper[/DualShock4GamepadHID/leftShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: af89cb2b-a3e5-4754-8b6c-4baa0138e7b4
+    m_ActionName: PlayerContol/Point
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2ca0081-de95-4c0a-bdf6-ac48f5b571b7
+    m_ActionName: PlayerContol/Click[/SwitchProControllerHID/buttonSouth,/DualShock4GamepadHID/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerContol
@@ -123,3 +148,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b436ec40d2e6944994e7d14fbaf1843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
+--- !u!114 &3243796796905125104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011822692015041416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79154844f7457ad4394725f568fcd09a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
+  cursorTransform: {fileID: 0}
+  canvas: {fileID: 0}
+  canvasRectTransform: {fileID: 0}
+  cursorSpeed: 1000
+  padding: 50
+  rightStickValue: {x: 0, y: 0}
