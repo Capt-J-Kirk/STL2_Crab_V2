@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 3440
     height: 1349
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -216,8 +216,8 @@ MonoBehaviour:
     y: 0
     width: 1024
     height: 849
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 100
+  controlID: 152
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -487,9 +487,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: c6860200
-      m_LastClickedID: 165574
-      m_ExpandedIDs: 7a15ffff9823ffff3032ffff10fbffff062e0100ee38010010e50100
+      m_SelectedIDs: 7a4e0000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 28fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -771,7 +771,7 @@ MonoBehaviour:
       containerId: overlay-container--right
       floating: 0
       collapsed: 0
-      displayed: 1
+      displayed: 0
       snapOffset: {x: 0, y: 0}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -906,7 +906,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.016659286, y: 0.90595293, z: -0.42153534, w: 0.03580381}
     speed: 2
-    m_Value: {x: 0.016659267, y: 0.905952, z: -0.4215349, w: 0.035803773}
+    m_Value: {x: 0.016659286, y: 0.9059529, z: -0.4215353, w: 0.035803806}
   m_Size:
     m_Target: 1.2315754
     speed: 2
@@ -980,7 +980,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Scripts
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -988,16 +988,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Scripts
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\Jan Kirk\Documents\GitHub\STL2_Crab_V2\STL2_Crab_V2
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 86ba0000
-    m_LastClickedID: 47750
-    m_ExpandedIDs: 00000000a2b90000
+    m_SelectedIDs: 28bc0000
+    m_LastClickedID: 48168
+    m_ExpandedIDs: 000000003abb0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1025,7 +1025,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a2b90000
+    m_ExpandedIDs: 000000003abb0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
