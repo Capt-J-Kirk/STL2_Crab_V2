@@ -83,7 +83,9 @@ public class GamepadCursor : MonoBehaviour
 
         bool aButtonIsPressed2 = Gamepad.current.aButton.IsPressed();
         bool aButtonIsPressed = Gamepad.current.buttonSouth.IsPressed();
-        Debug.Log(aButtonIsPressed);
+
+        //Debug.Log(aButtonIsPressed);
+
         if (previousMouseState !=  aButtonIsPressed)
         {
             virtualMouse.CopyState<MouseState>(out var mouseState);
