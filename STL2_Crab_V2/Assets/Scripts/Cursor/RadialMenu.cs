@@ -24,7 +24,7 @@ public class RadialMenu : MonoBehaviour
     }
 
 
-    void AddEntry(string pLabel, Texture pIcon, AudioClip pAudioClip, RadialMenuEntry.RadialMenuEntryDelegate pCallback)
+    void AddEntry(string pLabel, Texture pIcon, AudioClip pAudioClip)
     {
         GameObject entry = Instantiate(entryPrefab, transform);
 
@@ -32,7 +32,7 @@ public class RadialMenu : MonoBehaviour
         rme.SetLabel(pLabel);
         rme.SetIcon(pIcon);
         rme.SetAudio(pAudioClip);
-        rme.SetCallback(pCallback);
+        //rme.SetCallback(pCallback);
         
         entries.Add(rme);
     }
@@ -42,7 +42,7 @@ public class RadialMenu : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             int num = i + 1;
-            AddEntry("Button" + num.ToString(), icons[i], audioClips[i], PlayAudioClip);
+            AddEntry("Button" + num.ToString(), icons[i], audioClips[i]);
         }
         Rearrage();
     }
@@ -93,11 +93,14 @@ public class RadialMenu : MonoBehaviour
         }
     }
 
-    void PlayAudioClip(RadialMenuEntry pEntry)
+    public void PlayAudioClip()
     {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.clip = pEntry.GetAudio();
-        audio.Play();
-        Debug.Log("Plays Audio Radial Menu");
+        this.GetComponent<AudioSource>().Play();
+        Invoke("StopAudioClip", 5f);
+    }
+    
+    void StopAudioClip()
+    {
+        this.GetComponent<AudioSource>().Stop();
     }
 }

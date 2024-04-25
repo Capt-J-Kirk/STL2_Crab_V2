@@ -66,8 +66,7 @@ public class RadialMenuEntry : MonoBehaviour, IPointerClickHandler, IPointerEnte
     public void PlayAudioClip()
     {
         radialMenu.GetComponent<AudioSource>().clip = audioClip;
-        radialMenu.GetComponent<AudioSource>().Play();
-        //audioSource.Play();
+        radialMenu.GetComponent<RadialMenu>().PlayAudioClip();
         Debug.Log("Plays Audio  Radial Menu Entry");
     }
 
