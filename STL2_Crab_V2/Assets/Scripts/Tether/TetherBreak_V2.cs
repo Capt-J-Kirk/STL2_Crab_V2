@@ -108,6 +108,21 @@ public class TetherBreak_V2 : MonoBehaviour
         }
     }
 
+
+    public void BreakRope()
+    {
+        if (!ropeBroken)
+        {
+            ropeBroken = true;
+            jointLeft.connectedBody = null;
+            jointRight.connectedBody = null;
+            Destroy(jointLeft);
+            Destroy(jointRight);
+            foreach (Rigidbody itr in boneRigidBody) AddMass(itr);
+        }
+    }
+
+
     void ChangeColor(float dist)
     {
         float col = 1;

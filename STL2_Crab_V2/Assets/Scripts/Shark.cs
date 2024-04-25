@@ -16,8 +16,25 @@ public class Shark : MonoBehaviour
     public float distance;
 
     private float attackDistance = 15;
+    private float killDistance = 2;
     private Vector3 attackVector;
-    
+
+    // Ref. to tethers
+    public TetherBreak_V2 tether_Side_1;
+    public TetherBreak_V2 tether_Center;
+    public TetherBreak_V2 tether_Side_2;
+    private List<TetherBreak_V2> tethers = new();
+
+    // Ref. to GameData
+    public GameData gameData;
+
+    float killTimer = 1.5f;
+    float timeBetweenKills = 2.5f;
+    public AudioSource audioSource_1;
+    public AudioClip crack;
+    public AudioClip underWater;
+
+
     private void Awake()
     {
         animation = GetComponent<Animator>();
@@ -25,14 +42,19 @@ public class Shark : MonoBehaviour
         Debug.Log("Animation speed: " + speed);
         animation.speed = 5;
 
+        tethers.Add(tether_Side_1);
+        tethers.Add(tether_Center);
+        tethers.Add(tether_Side_2);
 
+        gameData = FindObjectOfType<GameData>();
     }
 
     private void FixedUpdate()
     {
         GetAttackData();
 
-        if (distance < attackDistance)
+        // Move
+        if (distance < attackDistance && distance > killDistance)
         {
             //gameObject.transform.LookAt(target.transform, Vector3.up);
 
@@ -45,6 +67,38 @@ public class Shark : MonoBehaviour
             // Move towards the target
             transform.Translate(attackVector * 1f * Time.deltaTime);
         }
+
+        // Kill
+        if (distance < killDistance && tethers.Count > 0)
+        {
+            killTimer += Time.deltaTime;
+            if (killTimer > timeBetweenKills) Kill();
+        }
+    }
+
+    void Kill()
+    {
+        if (tethers.Count > 1)
+        {
+            audioSource_1.clip = crack;
+            audioSource_1.Play();
+        } else {
+            audioSource_1.clip = crack;
+            audioSource_1.Play();
+            Invoke(nameof (PlayEndSound), crack.length);
+        }
+        string message = "The SHARK took a life";
+        tethers[0].BreakRope();
+        tethers.RemoveAt(0);
+        gameData.message = message;
+        gameData.showMessage = true;
+        killTimer = 0;
+    }
+
+    void PlayEndSound()
+    {
+        audioSource_1.clip = underWater;
+        audioSource_1.Play();
     }
 
 
