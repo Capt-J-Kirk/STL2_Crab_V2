@@ -11,7 +11,7 @@ public class GameData : MonoBehaviour
 {
     public List<TetherBreak_V2> tethers;
     public List<GameObject> UI_Objects;
-    public TMP_Text levelTimeText;
+    public TMP_Text messageUI_Text;
     public GameObject leftReadyButtonGO;
     public GameObject rightReadyButtonGO;
 
@@ -30,8 +30,8 @@ public class GameData : MonoBehaviour
     string message_Died = "The Crab died.";
     float showMessageTime = 1.5f;
     float showMessageTimer = 0;
-    string message = "";
-    bool showMessage = false;
+    public string message = "";
+    public bool showMessage = false;
 
     // Finish game
     int totalLevels = 1;
@@ -77,12 +77,12 @@ public class GameData : MonoBehaviour
         // Show timer or message.
         if (!showMessage)
         {
-            if (levelStarted) levelTimeText.text = "Timer: " + levelTimer.ToString("F1");
+            if (levelStarted) messageUI_Text.text = "Timer: " + levelTimer.ToString("F1");
         }
         else
         {
             showMessageTimer += Time.deltaTime;
-            levelTimeText.text = message;
+            messageUI_Text.text = message;
             if (showMessageTimer > showMessageTime)
             {
                 showMessage = false;
