@@ -96,7 +96,7 @@ public class RadialMenu : MonoBehaviour
     public void PlayAudioClip()
     {
         this.GetComponent<AudioSource>().Play();
-        Invoke("StopAudioClip", 5.5f);
+        //Invoke("StopAudioClip", 5.5f);
     }
     
     void StopAudioClip()
