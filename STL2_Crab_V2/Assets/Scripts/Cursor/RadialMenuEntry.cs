@@ -19,12 +19,18 @@ public class RadialMenuEntry : MonoBehaviour, IPointerClickHandler, IPointerEnte
     
     [SerializeField] private AudioClip audioClip;
 
+    [SerializeField] private AudioSource audioSource;
+
+    [SerializeField] private GameObject radialMenu;
+    
     private RectTransform rect;
     private RadialMenuEntryDelegate Callback;
 
     private void Start()
     {
         rect = icon.GetComponent<RectTransform>();
+        radialMenu = this.transform.parent.GameObject();
+        //audioSource = this.transform.parent.GameObject().GetComponent<AudioSource>();
     }
 
     public void SetLabel(string pText)
@@ -59,9 +65,9 @@ public class RadialMenuEntry : MonoBehaviour, IPointerClickHandler, IPointerEnte
     
     public void PlayAudioClip()
     {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.clip = GetAudio();
-        audio.Play();
+        radialMenu.GetComponent<AudioSource>().clip = audioClip;
+        radialMenu.GetComponent<AudioSource>().Play();
+        //audioSource.Play();
         Debug.Log("Plays Audio  Radial Menu Entry");
     }
 
