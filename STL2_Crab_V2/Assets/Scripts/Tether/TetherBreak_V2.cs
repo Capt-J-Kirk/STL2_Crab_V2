@@ -19,11 +19,18 @@ public class TetherBreak_V2 : MonoBehaviour
     private List<HingeJoint> hingeJoint = new();
     private Renderer rend;
 
-    private readonly float maxDist = 5.5f;
+    public float maxDist = 5.5f;
     private float warningDist;
 
     [HideInInspector]
     public bool ropeBroken = false;
+
+
+        // Ref. to GameData
+    public GameData gameData;
+    string message = "You lost one life.";
+
+    AudioSource audioSource;
 
 
 
@@ -71,6 +78,10 @@ public class TetherBreak_V2 : MonoBehaviour
         }
 
         foreach (Rigidbody itr in boneRigidBody) itr.mass = 0;
+
+        // Gamedata
+        gameData = FindObjectOfType<GameData>();
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -100,6 +111,11 @@ public class TetherBreak_V2 : MonoBehaviour
                 Destroy(jointRight);
                 foreach (Rigidbody itr in boneRigidBody) AddMass(itr);
                 Debug.Log("BROKEN => Tether rope, " + name + ". Distance: " + dist + " meters.");
+
+                // Message
+                gameData.message = message;
+                gameData.showMessage = true;
+                audioSource.Play();
             }
 
             //foreach (HingeJoint itr in hingeJoint) StretchControl(itr, 20, 0, 0);
