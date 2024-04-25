@@ -11,6 +11,8 @@ public class Terr_Rnd_MPD : MonoBehaviour
 {
     public bool reset = false;
 
+    NavMeshSurface navMeshSurface;
+
     // How much randomness do we want to add to the new generated values, the higher the more the terrain will look jagged
     //[SerializeField] private float maxRandomAddition = 0.5f;
     private float maxRandomAddition = 0.025f;
@@ -36,6 +38,8 @@ public class Terr_Rnd_MPD : MonoBehaviour
     {
         terrain = GetComponent<Terrain>();
         GenerateTerrain(terrain);
+        navMeshSurface = terrain.GetComponent<NavMeshSurface>();
+        //navMeshSurface.BuildNavMesh();
     }
 
 
