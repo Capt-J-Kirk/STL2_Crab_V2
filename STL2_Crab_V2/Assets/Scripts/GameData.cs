@@ -192,6 +192,6 @@ public class GameData : MonoBehaviour
         File.WriteAllText(filePath, playerData);
 
         // Refresh the AssetDatabase to make sure Unity detects the newly created file
-        UnityEditor.AssetDatabase.Refresh();
+        //UnityEditor.AssetDatabase.Refresh();
     }
 }
