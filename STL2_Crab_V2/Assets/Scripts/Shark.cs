@@ -29,7 +29,7 @@ public class Shark : MonoBehaviour
     public GameData gameData;
 
     float killTimer = 1.5f;
-    float timeBetweenKills = 2.5f;
+    float timeBetweenKills = 5f;
     public AudioSource audioSource_1;
     public AudioClip crack;
     public AudioClip underWater;
