@@ -39,7 +39,7 @@ public class RadialMenu : MonoBehaviour
 
     public void Open()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             int num = i + 1;
             AddEntry("Button" + num.ToString(), icons[i], audioClips[i]);
@@ -49,7 +49,7 @@ public class RadialMenu : MonoBehaviour
     
     public void Close()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             RectTransform rect = entries[i].GetComponent<RectTransform>();
             GameObject entry = entries[i].gameObject;
@@ -96,7 +96,7 @@ public class RadialMenu : MonoBehaviour
     public void PlayAudioClip()
     {
         this.GetComponent<AudioSource>().Play();
-        Invoke("StopAudioClip", 5f);
+        //Invoke("StopAudioClip", 5.5f);
     }
     
     void StopAudioClip()
