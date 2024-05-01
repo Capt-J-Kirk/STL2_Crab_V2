@@ -7,7 +7,7 @@ public class TetherBreak_V2 : MonoBehaviour
 {
     public GameObject charLeft;
     public GameObject charRight;
-
+    
     // Left/Right attactment hinge joins
     public HingeJoint jointLeft;
     public HingeJoint jointRight;
@@ -31,12 +31,13 @@ public class TetherBreak_V2 : MonoBehaviour
     string message = "You lost one life.";
 
     AudioSource audioSource;
+    public AudioClip[] audioClips;
 
 
 
     private void Awake()
     {
-        warningDist = 0.8f * maxDist;
+        warningDist = 0.75f * maxDist;
         rend = FindChildWithName(transform, "Cylinder").GetComponent<Renderer>();
 
         charLeft = GameObject.FindWithTag("LeftPart");
@@ -99,7 +100,11 @@ public class TetherBreak_V2 : MonoBehaviour
             float dist = Vector3.Distance(charLeft.transform.position, charRight.transform.position);
 
             // Warning
-            //if (dist > warningDist && dist <= maxDist) Debug.Log("WARNING => Tether rope, " + name + ". Distance close to max: " + dist + " meters.");
+            if (dist > warningDist && dist < maxDist && !audioSource.isPlaying)
+            {
+                audioSource.clip = audioClips[0];
+                audioSource.Play();
+            }
 
 
             if (dist >= maxDist)
@@ -115,6 +120,7 @@ public class TetherBreak_V2 : MonoBehaviour
                 // Message
                 gameData.message = message;
                 gameData.showMessage = true;
+                audioSource.clip = audioClips[1];
                 audioSource.Play();
             }
 

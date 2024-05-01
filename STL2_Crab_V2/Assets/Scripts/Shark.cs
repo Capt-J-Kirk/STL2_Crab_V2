@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,10 +21,11 @@ public class Shark : MonoBehaviour
     private Vector3 attackVector;
 
     // Ref. to tethers
-    public TetherBreak_V2 tether_Side_1;
-    public TetherBreak_V2 tether_Center;
-    public TetherBreak_V2 tether_Side_2;
+    //public TetherBreak_V2 tether_Side_1;
+    //public TetherBreak_V2 tether_Center;
+    //public TetherBreak_V2 tether_Side_2;
     private List<TetherBreak_V2> tethers = new();
+    private int remainingTethers = 0;
 
     // Ref. to GameData
     public GameData gameData;
@@ -42,9 +44,9 @@ public class Shark : MonoBehaviour
         Debug.Log("Animation speed: " + speed);
         animation.speed = 5;
 
-        tethers.Add(tether_Side_1);
-        tethers.Add(tether_Center);
-        tethers.Add(tether_Side_2);
+        //tethers.Add(tether_Side_1);
+        //tethers.Add(tether_Center);
+        //tethers.Add(tether_Side_2);
 
         gameData = FindObjectOfType<GameData>();
     }
@@ -52,6 +54,7 @@ public class Shark : MonoBehaviour
     private void FixedUpdate()
     {
         GetAttackData();
+        if (remainingTethers == 0) return;
 
         // Move
         if (distance < attackDistance && distance > killDistance)
@@ -69,7 +72,7 @@ public class Shark : MonoBehaviour
         }
 
         // Kill
-        if (distance < killDistance && tethers.Count > 0)
+        if (distance < killDistance && remainingTethers > 0)
         {
             killTimer += Time.deltaTime;
             if (killTimer > timeBetweenKills) Kill();
@@ -78,7 +81,7 @@ public class Shark : MonoBehaviour
 
     void Kill()
     {
-        if (tethers.Count > 1)
+        if (remainingTethers > 1)
         {
             audioSource_1.clip = crack;
             audioSource_1.Play();
@@ -104,6 +107,19 @@ public class Shark : MonoBehaviour
 
     void GetAttackData()
     {
+        tethers.Clear();
+        remainingTethers = 0;
+        TetherBreak_V2[] remaining = FindObjectsByType<TetherBreak_V2>(FindObjectsSortMode.None);
+        foreach (var item in remaining)
+        {
+            if (!item.ropeBroken)
+            {
+                remainingTethers++;
+                tethers.Add(item);
+            }
+        }
+
+
         distance_L = Vector3.Distance(crab_LeftPart.transform.position, transform.position);
         distance_R = Vector3.Distance(crab_RightPart.transform.position, transform.position);
         distance = Mathf.Min(distance_L, distance_R);
