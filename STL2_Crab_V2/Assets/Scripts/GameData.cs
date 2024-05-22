@@ -15,6 +15,11 @@ public class GameData : MonoBehaviour
     public GameObject leftReadyButtonGO;
     public GameObject rightReadyButtonGO;
 
+    // Endgame dance
+    GameObject[] dancingParts = new GameObject[10];
+    public GameObject[] dancingLights = new GameObject[5];
+    public GameObject dirLight;
+
 
     // Level performance
     public float gameTimer = 0;
@@ -32,6 +37,7 @@ public class GameData : MonoBehaviour
     float showMessageTimer = 0;
     public string message = "";
     public bool showMessage = false;
+    float danceTime = 10;
 
     // Finish game
     int totalLevels = 1;
@@ -45,6 +51,12 @@ public class GameData : MonoBehaviour
         saveFile = true;
         playersReady = 0;
         currentLevel = 1;
+        dancingParts = GameObject.FindGameObjectsWithTag("RaveDancer");
+        foreach (GameObject itr in dancingParts)
+        {
+            itr.GetComponent<Animator>().speed = 0;
+
+        }
     }
 
     // Post processing
@@ -155,12 +167,29 @@ public class GameData : MonoBehaviour
 
     void EndGame(string gameComplete)
     {
-        playersReady = 0;
-        levelStarted = false;
-
         SaveGameData(gameComplete);
+
+        foreach (GameObject itr in dancingParts)
+        {
+            itr.GetComponent<Animator>().speed = 1;
+        }
+        foreach (GameObject itr in dancingLights)
+        {
+            itr.SetActive(true);
+        }
+        dirLight.GetComponent<Light>().intensity = 0;
+
+        Invoke(nameof(Dancing),danceTime);
+
         // In case we want to quit the game.
         //Application.Quit();
+    }
+
+
+    void Dancing()
+    {
+        playersReady = 0;
+        levelStarted = false;
     }
 
 
