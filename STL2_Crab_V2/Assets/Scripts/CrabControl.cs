@@ -52,6 +52,8 @@ public class CrabControl : MonoBehaviour
     public GameObject radialMenu; // RadialMenu
     public GameObject cursor; // Cursor
 
+    public Animator animator;
+
 
     private void Awake()
     {
@@ -64,6 +66,7 @@ public class CrabControl : MonoBehaviour
         camPitchObj.transform.localPosition = new Vector3(camPitchObj.transform.localPosition.x, camPitchObj.transform.localPosition.y, camPitchObj.transform.localPosition.z * cameraOffsetFactor);
 
         gameData = GameObject.FindAnyObjectByType<GameData>();
+        animator.speed = 0;
     }
 
 
@@ -146,6 +149,7 @@ public class CrabControl : MonoBehaviour
 
         // Apply new velocity
         rb.velocity = direction * transform.TransformDirection(localVelocity);
+        animator.speed = rb.velocity.sqrMagnitude;
 
         speedTimer += Time.deltaTime;
         if (speedTimer > speedChangeTime) speedTimer = speedChangeTime;

@@ -7,6 +7,11 @@ TagManager:
   - LeftPart
   - RightPart
   - Rope
+  - LeftPart_Armature_Mesh
+  - RightPart_Armature_Mesh
+  - LeftPart_MovementCylinder
+  - RightPart_MovementCylinder
+  - RaveDancer
   layers:
   - Default
   - TransparentFX

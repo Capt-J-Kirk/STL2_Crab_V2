@@ -8,6 +8,13 @@ public class TestForFinishLevel : MonoBehaviour
     public bool levelFinishedLeft;
     public bool levelFinishedRight;
     public bool levelFinished;
+    AudioSource audioSource;
+
+    string tagLeft = "LeftPart_MovementCylinder";
+    string tagRight = "RightPart_MovementCylinder";
+
+    Animator animatorLeft;
+    Animator animatorRight;
 
     private void Awake()
     {
@@ -15,33 +22,39 @@ public class TestForFinishLevel : MonoBehaviour
         levelFinishedLeft = false;
         levelFinishedRight = false;
         levelFinished = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Border trigger");
+        Debug.Log("Border trigger: name: " + other.name + ", tag:" + other.tag);
         if (!levelFinished)
         {
-            if (other.CompareTag("LeftPart") || other.name == "LeftPart")
+            if (other.CompareTag(tagLeft))
             {
-                
                 levelFinishedLeft = true;
-                if (levelFinishedRight)
-                {
-                    levelFinished = true;
-                    gameData.FinishLevel(true);
-                }
+                animatorLeft = other.GetComponent<Animator>();
+                if (levelFinishedRight) Finishlevel();
             }
 
-            if (other.CompareTag("RightPart") || other.name == "RightPart")
+            if (other.CompareTag(tagRight))
             {
                 levelFinishedRight = true;
-                if (levelFinishedLeft)
-                {
-                    levelFinished = true;
-                    gameData.FinishLevel(true);
-                }
+                animatorRight = other.GetComponent<Animator>();
+                if (levelFinishedLeft) Finishlevel();
             }
         }
     }
+
+
+    void Finishlevel()
+    {
+        levelFinished = true;
+        audioSource.Play();
+        gameData.FinishLevel(true);
+    }
+
+
 }
+
+
