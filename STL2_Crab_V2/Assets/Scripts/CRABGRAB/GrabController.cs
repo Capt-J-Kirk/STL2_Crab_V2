@@ -21,6 +21,13 @@ public class GrabController : MonoBehaviour
         Reticle.SetActive(false);
     }
 
+    private void FixedUpdate()
+    {
+        if (item != null && !isGrabbing)
+        {
+            item = null;
+        }
+    }
     void Update()
     {
         // Check for grab input
