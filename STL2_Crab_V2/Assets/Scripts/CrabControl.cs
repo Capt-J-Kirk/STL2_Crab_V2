@@ -47,7 +47,7 @@ public class CrabControl : MonoBehaviour
     [HideInInspector] public bool isSpraying = false;
 
     public GameData gameData;
-    private bool allowMovementOnDeath = false;   // For testing.
+    private bool allowMovementOnDeath = true;   // For testing.
 
     public GameObject radialMenu; // RadialMenu
     public GameObject cursor; // Cursor

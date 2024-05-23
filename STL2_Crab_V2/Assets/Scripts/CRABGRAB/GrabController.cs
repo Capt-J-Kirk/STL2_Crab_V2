@@ -13,11 +13,18 @@ public class GrabController : MonoBehaviour
     private Quaternion originalRotationOffset;
     private GameObject item;
     private Vector3 worldPoint;
+    public Camera worldCam;
+    public GameObject Reticle;
+
+    private void Start()
+    {
+        Reticle.SetActive(false);
+    }
 
     void Update()
     {
         // Check for grab input
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetAxis("LeftTrigger") > 0.1f && !isGrabbing)
         {
             ToggleGrab();
         }
@@ -25,16 +32,16 @@ public class GrabController : MonoBehaviour
         // Check for aiming input
         if (isGrabbing)
         {
-            if (Input.GetButtonDown("Fire2"))
+            if (Input.GetAxis("RightTrigger") > 0.1f)
             {
                 isAiming = true;
-                // Enable Reticle
+                Reticle.SetActive(true);
             }
-            else if (Input.GetButtonUp("Fire2"))
+            else if (isAiming && Input.GetAxis("RightTrigger") <= 0.1f)
             {
                 isAiming = false;
                 ThrowObject(worldPoint);
-                //Disable Reticle
+                Reticle.SetActive(false);
             }
         }
 
@@ -103,25 +110,9 @@ public class GrabController : MonoBehaviour
     }
     Vector3 CalculateThrowDirection()
     {
-        // Get the camera
-        Camera cam = Camera.main;
-
-        // Get a ray from the center of the screen
-        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-
-        // Assume the world point is on the same plane as the reference object
-        Plane plane = new Plane(Vector3.up, this.gameObject.transform.position);
-
-        // Calculate the intersection point
-        float distance;
-        Vector3 worldPoint = Vector3.zero;
-        if (plane.Raycast(ray, out distance))
-        {
-            worldPoint = ray.GetPoint(distance);
-        }
-
-        // Calculate the direction vector from the reference object to the world point
-        Vector3 direction = worldPoint - this.gameObject.transform.position;
-        return direction;
+        
+        Camera cam = worldCam;
+        Vector3 throwDirection = cam.transform.forward;
+        return throwDirection;
     }
 }
