@@ -52,6 +52,8 @@ public class CrabControl : MonoBehaviour
     public GameObject radialMenu; // RadialMenu
     public GameObject cursor; // Cursor
 
+    public GameObject pauseMenu;
+
 
     private void Awake()
     {
@@ -64,6 +66,7 @@ public class CrabControl : MonoBehaviour
         camPitchObj.transform.localPosition = new Vector3(camPitchObj.transform.localPosition.x, camPitchObj.transform.localPosition.y, camPitchObj.transform.localPosition.z * cameraOffsetFactor);
 
         gameData = GameObject.FindAnyObjectByType<GameData>();
+        pauseMenu = GameObject.Find("PauseMenu");
     }
 
 
