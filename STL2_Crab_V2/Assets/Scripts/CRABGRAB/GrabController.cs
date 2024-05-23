@@ -4,36 +4,61 @@ public class GrabController : MonoBehaviour
 {
     public Transform handTransform; // The transform representing the character's hand
     public float grabRange = 2f; // The range within which the character can grab objects
+    public float throwForce = 10f; // Force applied when throwing the object
 
     private bool isGrabbing = false;
+    private bool isAiming = false;
     private Rigidbody currentGrabbedObject;
     private Vector3 originalGrabOffset;
     private Quaternion originalRotationOffset;
     private GameObject item;
+    private Vector3 worldPoint;
+    public Camera worldCam;
+    public GameObject Reticle;
+
+    private void Start()
+    {
+        Reticle.SetActive(false);
+    }
 
     void Update()
     {
         // Check for grab input
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetAxis("LeftTrigger") > 0.1f && !isGrabbing)
         {
             ToggleGrab();
         }
 
+        // Check for aiming input
+        if (isGrabbing)
+        {
+            if (Input.GetAxis("RightTrigger") > 0.1f)
+            {
+                isAiming = true;
+                Reticle.SetActive(true);
+            }
+            else if (isAiming && Input.GetAxis("RightTrigger") <= 0.1f)
+            {
+                isAiming = false;
+                ThrowObject(worldPoint);
+                Reticle.SetActive(false);
+            }
+        }
+
         // Moves grabbed object
-        if (isGrabbing && currentGrabbedObject != null)
+        if (isGrabbing && currentGrabbedObject != null && !isAiming)
         {
             Vector3 desiredPosition = handTransform.TransformPoint(originalGrabOffset);
-            // Add 2 to the y-coordinate of the desired position
-            desiredPosition.y += 2f;
+            desiredPosition.y += 2f; // Adjust the y-position if necessary
             currentGrabbedObject.MovePosition(desiredPosition);
             currentGrabbedObject.MoveRotation(handTransform.rotation * originalRotationOffset);
         }
 
-        // Throw object if grab button is pressed again while holding an object
-        if (isGrabbing && currentGrabbedObject != null && Input.GetButtonDown("Fire2"))
+        if (isAiming && currentGrabbedObject != null)
         {
-            ThrowMode();
-        } 
+            
+            worldPoint = CalculateThrowDirection();
+        }
     }
 
     void OnTriggerStay(Collider target)
@@ -73,8 +98,21 @@ public class GrabController : MonoBehaviour
         }
     }
 
-    void ThrowMode()
+    void ThrowObject(Vector3 throwDirection)
     {
-        // Implement throw logic here
+        if (currentGrabbedObject != null)
+        {
+            currentGrabbedObject.isKinematic = false;
+            currentGrabbedObject.AddForce(throwDirection.normalized * throwForce, ForceMode.VelocityChange);
+            currentGrabbedObject = null;
+            isGrabbing = false;
+        }
+    }
+    Vector3 CalculateThrowDirection()
+    {
+        
+        Camera cam = worldCam;
+        Vector3 throwDirection = cam.transform.forward;
+        return throwDirection;
     }
 }

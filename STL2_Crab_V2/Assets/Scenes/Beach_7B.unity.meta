@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:STL2_Crab_V2/Assets/Scenes/Beach_7B.unity.meta
 guid: 816497bc11f62144aa8e25ba347bc414
+========
+guid: 71216626ef70fc34ab400266e40d799a
+folderAsset: yes
+>>>>>>>> KasteMechanics:STL2_Crab_V2/Assets/Data.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
