@@ -31,12 +31,18 @@ public class GrabController : MonoBehaviour
     void Update()
     {
         // Check for grab input
+        // ----------------------------- Jan outcomment -----------------------------
+        /*
         if (Input.GetAxis("LeftTrigger") > 0.1f && !isGrabbing)
         {
             ToggleGrab();
         }
+        */
+        // --------------------------------------------------------------------------
 
         // Check for aiming input
+        // ----------------------------- Jan outcomment -----------------------------
+        /*
         if (isGrabbing)
         {
             if (Input.GetAxis("RightTrigger") > 0.1f)
@@ -51,6 +57,8 @@ public class GrabController : MonoBehaviour
                 Reticle.SetActive(false);
             }
         }
+        */
+        // --------------------------------------------------------------------------
 
         // Moves grabbed object
         if (isGrabbing && currentGrabbedObject != null && !isAiming)
@@ -81,8 +89,33 @@ public class GrabController : MonoBehaviour
         item = grabTarget;
     }
 
-    void ToggleGrab()
+    //  ... Jan ... new method for new input system.
+    public void CheckRightTrigger(bool performed)
     {
+        if (isGrabbing)
+        {
+            if (performed)
+            {
+                isAiming = true;
+                Reticle.SetActive(true);
+            }
+            else if (isAiming && !performed) // (is cancelled ... release trigger)
+            {
+                isAiming = false;
+                ThrowObject(worldPoint);
+                Reticle.SetActive(false);
+            }
+        }
+    }
+
+
+    //  ... Jan ... now used by new input system.
+    public void ToggleGrab()
+    {
+        // ... Jan add
+        if (isGrabbing) return;
+        // -------------
+
         if (!isGrabbing && item != null)
         {
             if (item.GetComponent<Rigidbody>() != null)

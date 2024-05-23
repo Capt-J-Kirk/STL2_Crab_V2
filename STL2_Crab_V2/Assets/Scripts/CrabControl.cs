@@ -53,7 +53,7 @@ public class CrabControl : MonoBehaviour
     Color crabColor;
 
     public GameData gameData;
-    private bool allowMovementOnDeath = true;   // For testing.
+    private bool allowMovementOnDeath = false;   // For testing.
 
     public GameObject radialMenu; // RadialMenu
     public GameObject cursor; // Cursor
