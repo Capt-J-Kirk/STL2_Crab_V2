@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.GraphicsBuffer;
@@ -45,6 +46,11 @@ public class CrabControl : MonoBehaviour
     // Particle system
     public ParticleSystem crabParticle;
     [HideInInspector] public bool isSpraying = false;
+    // Material
+    List<Material> crabMaterials = new();
+    public Material material;
+    public GameObject crabGO;
+    Color crabColor;
 
     public GameData gameData;
     private bool allowMovementOnDeath = false;   // For testing.
@@ -57,8 +63,8 @@ public class CrabControl : MonoBehaviour
 
     private void Awake()
     {
-        var main = crabParticle.main;
-        main.loop = true;
+        crabParticle.Stop();
+
 
         rb = GetComponent<Rigidbody>();
         camera = GetComponentInChildren<Camera>();
@@ -67,6 +73,13 @@ public class CrabControl : MonoBehaviour
 
         gameData = GameObject.FindAnyObjectByType<GameData>();
         animator.speed = 0;
+
+        // Get start material => create and assign a new instance of it.
+        // ... and get the start color.
+        crabMaterials = crabGO.GetComponent<Renderer>().materials.ToList();
+        material = new Material(crabMaterials[0]);
+        crabGO.GetComponent<Renderer>().material = material;
+        crabColor = material.color;
     }
 
 
@@ -81,6 +94,19 @@ public class CrabControl : MonoBehaviour
             {
                 RotateCamera();
             }
+        }
+
+        if (gameData.playersReady == 0 && gameData.tethersLeft == 0)
+        {
+            // 'Limbo rotation'
+            rb.transform.Rotate(rb.transform.up * 50 * Time.deltaTime, Space.Self);
+            // 'Death smoke'
+            crabParticle.Play();
+            // Change color
+            crabColor.r *= ((1f - Time.deltaTime/2.5f) / 1f);
+            crabColor.g *= ((1f - Time.deltaTime/2.5f) / 1f);
+            crabColor.b *= ((1f - Time.deltaTime/2.5f) / 1f);
+            crabGO.GetComponent<Renderer>().material.color = crabColor;
         }
     }
 

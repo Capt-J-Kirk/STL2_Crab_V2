@@ -38,6 +38,7 @@ public class GameData : MonoBehaviour
     public string message = "";
     public bool showMessage = false;
     float danceTime = 10;
+    public int tethersLeft;
 
     // Finish game
     int totalLevels = 1;
@@ -67,7 +68,7 @@ public class GameData : MonoBehaviour
     private void FixedUpdate()
     {
         // Count unbroken tethers, and end game if there is none.
-        int tethersLeft = 0;
+        tethersLeft = 0;
         foreach (TetherBreak_V2 itr in tethers)
         {
             if (itr.ropeBroken == false) tethersLeft++;
@@ -169,17 +170,24 @@ public class GameData : MonoBehaviour
     {
         SaveGameData(gameComplete);
 
-        foreach (GameObject itr in dancingParts)
+        if (gameComplete == "True")
         {
-            itr.GetComponent<Animator>().speed = 1;
-        }
-        foreach (GameObject itr in dancingLights)
-        {
-            itr.SetActive(true);
-        }
-        dirLight.GetComponent<Light>().intensity = 0;
+            foreach (GameObject itr in dancingParts)
+            {
+                itr.GetComponent<Animator>().speed = 1;
+            }
+            foreach (GameObject itr in dancingLights)
+            {
+                itr.SetActive(true);
+            }
+            dirLight.GetComponent<Light>().intensity = 0;
 
-        Invoke(nameof(Dancing),danceTime);
+            Invoke(nameof(Dancing), danceTime);
+        }
+        else
+        {
+            Invoke(nameof(Dancing), 0);
+        }
 
         // In case we want to quit the game.
         //Application.Quit();

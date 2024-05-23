@@ -42,9 +42,6 @@ public class TetherBreak_V2 : MonoBehaviour
 
         charLeft = GameObject.FindWithTag("LeftPart");
         charRight = GameObject.FindWithTag("RightPart");
-        //charLeft = GameObject.FindWithTag("LeftPart_Armature_Mesh");
-        //charRight = GameObject.FindWithTag("RightPart_Armature_Mesh");
-
 
         for (int i = 0; i < boneCount; i++)
         {
