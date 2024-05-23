@@ -10,6 +10,7 @@ public class PlayerInputHandler : MonoBehaviour
     private PlayerInput playerInput;
     private CrabControl crabControl;
     private GamepadCursor gamepadCursor;
+    private GrabController grabControl;
     public int index;
 
     // private Crab_Input inputDPad = null;
@@ -19,10 +20,16 @@ public class PlayerInputHandler : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         gamepadCursor = GetComponent<GamepadCursor>();
+        // CrabControl
         var controllers = FindObjectsOfType<CrabControl>();
         foreach (CrabControl itr in controllers) Debug.Log("crab controllers: " + itr.name);
         index = playerInput.playerIndex;
         crabControl = controllers.FirstOrDefault(m => m.GetPlayerIndex() == index);
+        // GrabController
+        var grabControllers = FindObjectsOfType<GrabController>();
+        foreach (GrabController itr in grabControllers) Debug.Log("crab GRAB_controllers: " + itr.name);
+        // ... using index already found.
+        grabControl = grabControllers[index];
 
         Debug.Log(index);
         // inputDPad = new Crab_Input();
@@ -111,10 +118,31 @@ public class PlayerInputHandler : MonoBehaviour
         crabControl.rightVector = Vector2.zero;
     }
 
-    public void OnRTriggerPerformed(InputAction.CallbackContext value)
+    public void OnLTriggerPerformed(InputAction.CallbackContext context)
     {
-        if (crabControl == null) return;
+        if (grabControl == null) return;
+        grabControl.ToggleGrab();
 
+    }
+
+
+    public void OnRTriggerPerformed(InputAction.CallbackContext context)
+    {
+        if (grabControl == null) return;
+
+        if (context.performed)
+        {
+            Debug.Log("Performed Right trigger");
+            grabControl.CheckRightTrigger(true);
+        }
+
+        if (context.canceled)
+        {
+            Debug.Log("Cancelled Right trigger");
+            grabControl.CheckRightTrigger(false);
+        }
+
+        /*
         if (!crabControl.crabParticle.isPlaying)
         {
             crabControl.crabParticle.Play();
@@ -125,13 +153,9 @@ public class PlayerInputHandler : MonoBehaviour
             crabControl.crabParticle.Stop();
             crabControl.isSpraying = false;
         }
+        */
     }
 
-    public void OnRTriggerCancelled(InputAction.CallbackContext value)
-    {
-
-
-    }
 
     public void OnXButtonPerformed(InputAction.CallbackContext value)
     {
