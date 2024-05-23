@@ -25,7 +25,7 @@ public class GameData : MonoBehaviour
     public float gameTimer = 0;
     public float levelTimer = 0;
     private List<float> levelDurations = new();
-    private bool levelStarted = false;
+    public bool levelStarted = false;
     public int playersReady = 0;
     public bool saveFile;
 
@@ -58,6 +58,9 @@ public class GameData : MonoBehaviour
             itr.GetComponent<Animator>().speed = 0;
 
         }
+
+        // Need to count tethers, so end smoke doesn't start.
+        foreach (TetherBreak_V2 itr in tethers) if (itr.ropeBroken == false) tethersLeft++;
     }
 
     // Post processing
