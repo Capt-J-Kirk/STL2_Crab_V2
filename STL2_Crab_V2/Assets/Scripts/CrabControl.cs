@@ -83,8 +83,6 @@ public class CrabControl : MonoBehaviour
     }
 
 
-
-
     private void FixedUpdate()
     {
         if (gameData.playersReady >= 2 || allowMovementOnDeath)
@@ -96,16 +94,16 @@ public class CrabControl : MonoBehaviour
             }
         }
 
-        if (gameData.playersReady == 0 && gameData.tethersLeft == 0)
+        if (gameData.tethersLeft == 0)
         {
             // 'Limbo rotation'
             rb.transform.Rotate(rb.transform.up * 50 * Time.deltaTime, Space.Self);
             // 'Death smoke'
             crabParticle.Play();
             // Change color
-            crabColor.r *= ((1f - Time.deltaTime/2.5f) / 1f);
-            crabColor.g *= ((1f - Time.deltaTime/2.5f) / 1f);
-            crabColor.b *= ((1f - Time.deltaTime/2.5f) / 1f);
+            crabColor.r *= ((1f - Time.deltaTime / 2.5f) / 1f);
+            crabColor.g *= ((1f - Time.deltaTime / 2.5f) / 1f);
+            crabColor.b *= ((1f - Time.deltaTime / 2.5f) / 1f);
             crabGO.GetComponent<Renderer>().material.color = crabColor;
         }
     }
