@@ -59,6 +59,7 @@ public class CrabControl : MonoBehaviour
     public GameObject cursor; // Cursor
 
     public Animator animator;
+    public GameObject pauseMenu;
 
 
     private void Awake()
@@ -80,6 +81,7 @@ public class CrabControl : MonoBehaviour
         material = new Material(crabMaterials[0]);
         crabGO.GetComponent<Renderer>().material = material;
         crabColor = material.color;
+        pauseMenu = GameObject.Find("PauseMenu");
     }
 
 

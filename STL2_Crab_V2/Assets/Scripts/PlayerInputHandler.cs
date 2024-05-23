@@ -176,6 +176,28 @@ public class PlayerInputHandler : MonoBehaviour
             crabControl.cursor.SetActive(false);
         }
     }
+    
+    public void OnPauseButtonPerformed(InputAction.CallbackContext context)
+    {
+        if (crabControl == null) return;
+        
+        if (context.performed)
+        {
+            Debug.Log("Start Button Performed");
+            crabControl.pauseMenu.GetComponent<PauseMenu>().PauseGame();
+            
+            if (crabControl.pauseMenu.GetComponent<PauseMenu>()._isPaused)
+            {
+                crabControl.rightStickRotateCamera = false;
+                crabControl.cursor.SetActive(true);
+            }
+            else
+            {
+                crabControl.rightStickRotateCamera = true;
+                crabControl.cursor.SetActive(false);
+            }
+        }
+    }
 
 
 }
